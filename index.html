@@ -1,431 +1,703 @@
-:root {
-  --bg: #090a0d;
-  --bg-subtle: #101218;
-  --bg-card: #13151f;
-  --border: rgba(255, 255, 255, 0.08);
-  --border-hover: rgba(255, 255, 255, 0.18);
-  --text: #ededed;
-  --text-muted: #888d9e;
-  --text-dim: #505565;
-  --accent: #ffffff;
-  --accent-blue: #3b82f6;
-  --danger: #ef4444;
-  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", Helvetica, Arial, sans-serif;
-}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Whyexx Client 1.21.4</title>
+  <style>
+    :root {
+      --bg: #090a0d;
+      --bg-subtle: #11131a;
+      --bg-card: #141622;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.2);
+      --text: #f0f1f5;
+      --text-muted: #8c91a4;
+      --text-dim: #555b70;
+      --accent: #ffffff;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+    }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-body {
-  background-color: var(--bg);
-  color: var(--text);
-  font-family: var(--font);
-  font-size: 15px;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-}
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
 
-.container {
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
 
-/* Навигация */
-header {
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  background: rgba(9, 10, 13, 0.85);
-  backdrop-filter: blur(12px);
-  z-index: 50;
-}
+    /* Навигация */
+    header {
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(9, 10, 13, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 50;
+    }
 
-.nav-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 60px;
-}
+    .nav-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
 
-.brand {
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-  color: #fff;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+    .brand {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: -0.3px;
+    }
 
-.brand-dot {
-  width: 7px;
-  height: 7px;
-  background: #22c55e;
-  border-radius: 50%;
-}
+    .brand-dot {
+      width: 7px;
+      height: 7px;
+      background: #22c55e;
+      border-radius: 50%;
+    }
 
-.nav-links {
-  display: flex;
-  gap: 20px;
-}
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
 
-.nav-links a {
-  color: var(--text-muted);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  transition: color 0.15s;
-}
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
 
-.nav-links a:hover, .nav-links a.active {
-  color: #fff;
-}
+    .nav-links a:hover { color: #fff; }
 
-/* Кнопки */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  border-radius: 6px;
-  border: 1px solid transparent;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.15s ease;
-}
+    /* Кнопки */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 18px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
 
-.btn-primary {
-  background: #fff;
-  color: #000;
-}
-.btn-primary:hover {
-  background: #e2e2e2;
-}
+    .btn-primary { background: #fff; color: #000; }
+    .btn-primary:hover { background: #dedede; }
 
-.btn-outline {
-  background: transparent;
-  color: var(--text);
-  border-color: var(--border);
-}
-.btn-outline:hover {
-  border-color: var(--border-hover);
-  background: rgba(255, 255, 255, 0.03);
-}
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--border);
+    }
+    .btn-outline:hover {
+      border-color: var(--border-hover);
+      background: rgba(255, 255, 255, 0.03);
+    }
 
-.btn-sm {
-  padding: 5px 10px;
-  font-size: 12px;
-}
+    .btn-sm { padding: 6px 12px; font-size: 12px; }
 
-/* Баннер анонса */
-.announcement {
-  padding: 8px 16px;
-  text-align: center;
-  font-size: 13px;
-  color: var(--text-muted);
-  border-bottom: 1px solid var(--border);
-  background: var(--bg-subtle);
-}
+    /* Анонс */
+    .announcement {
+      padding: 8px 16px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-subtle);
+    }
 
-/* Hero */
-.hero {
-  padding: 70px 0 50px;
-  text-align: center;
-}
+    /* Hero */
+    .hero {
+      padding: 70px 0 50px;
+      text-align: center;
+    }
 
-.badge-version {
-  display: inline-block;
-  padding: 4px 10px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text-muted);
-  background: var(--bg-subtle);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  margin-bottom: 20px;
-}
+    .badge-ver {
+      display: inline-block;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      margin-bottom: 18px;
+    }
 
-.hero h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  letter-spacing: -1.2px;
-  margin-bottom: 14px;
-}
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: -1.2px;
+      margin-bottom: 12px;
+    }
 
-.hero p {
-  color: var(--text-muted);
-  font-size: 1.1rem;
-  max-width: 540px;
-  margin: 0 auto 36px;
-}
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 520px;
+      margin: 0 auto 36px;
+    }
 
-/* Кнопки загрузок (Минималистичные) */
-.downloads-row {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
+    /* Карточки загрузки */
+    .downloads-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
 
-.dl-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 20px 24px;
-  text-align: left;
-  min-width: 280px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: border-color 0.15s;
-}
+    .dl-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color 0.15s;
+    }
 
-.dl-card:hover {
-  border-color: var(--border-hover);
-}
+    .dl-card:hover { border-color: var(--border-hover); }
 
-.dl-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
+    .dl-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
 
-.dl-card-title {
-  font-size: 16px;
-  font-weight: 600;
-}
+    .dl-title { font-size: 17px; font-weight: 600; }
+    .dl-tag { font-size: 11px; color: var(--text-dim); font-weight: 600; }
+    .dl-desc { color: var(--text-muted); font-size: 13px; margin-bottom: 22px; }
 
-.dl-card-tag {
-  font-size: 11px;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
+    /* Форум */
+    .section {
+      padding: 60px 0;
+      border-top: 1px solid var(--border);
+    }
 
-.dl-card-desc {
-  color: var(--text-muted);
-  font-size: 13px;
-  margin-bottom: 18px;
-}
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
 
-/* Форум */
-.section {
-  padding: 50px 0;
-  border-top: 1px solid var(--border);
-}
+    .section-head h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
 
-.section-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
+    .forum-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
 
-.section-head h2 {
-  font-size: 1.3rem;
-  font-weight: 600;
-  letter-spacing: -0.3px;
-}
+    .forum-tabs {
+      display: flex;
+      gap: 6px;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-subtle);
+      overflow-x: auto;
+    }
 
-.forum-box {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-}
+    .f-tab {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
 
-.forum-tabs {
-  display: flex;
-  gap: 8px;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg-subtle);
-  overflow-x: auto;
-}
+    .f-tab.active, .f-tab:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+    }
 
-.f-tab {
-  background: transparent;
-  border: none;
-  color: var(--text-muted);
-  font-size: 13px;
-  font-weight: 500;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-}
+    .topic-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.1s;
+    }
 
-.f-tab.active, .f-tab:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.06);
-}
+    .topic-row:last-child { border-bottom: none; }
+    .topic-row:hover { background: rgba(255, 255, 255, 0.02); }
 
-.topic-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 20px;
-  border-bottom: 1px solid var(--border);
-  cursor: pointer;
-  transition: background 0.1s;
-}
+    .topic-info h4 {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
 
-.topic-row:last-child {
-  border-bottom: none;
-}
+    .topic-info p {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
 
-.topic-row:hover {
-  background: rgba(255, 255, 255, 0.02);
-}
+    .tag-pin {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      font-weight: 600;
+      margin-right: 6px;
+    }
 
-.topic-info h4 {
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 4px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+    /* Модалки */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-.topic-info p {
-  font-size: 12px;
-  color: var(--text-dim);
-}
+    .modal-overlay.active { display: flex; }
 
-.tag-pin {
-  font-size: 10px;
-  padding: 1px 6px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  font-weight: 600;
-}
+    .modal-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 560px;
+      padding: 24px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
 
-/* Модалки */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(6px);
-  z-index: 100;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
 
-.modal-overlay.active {
-  display: flex;
-}
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 20px;
+      cursor: pointer;
+    }
 
-.modal-content {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  width: 100%;
-  max-width: 580px;
-  padding: 24px;
-  position: relative;
-  max-height: 90vh;
-  overflow-y: auto;
-}
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
 
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 18px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--border);
-}
+    .form-control {
+      width: 100%;
+      padding: 9px 12px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      font-family: inherit;
+    }
 
-.modal-header h3 {
-  font-size: 16px;
-  font-weight: 600;
-}
+    .form-control:focus { border-color: rgba(255, 255, 255, 0.3); }
+    textarea.form-control { resize: vertical; min-height: 90px; }
 
-.modal-close {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  font-size: 20px;
-  cursor: pointer;
-}
+    .post-item {
+      padding: 12px 14px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
 
-.form-group {
-  margin-bottom: 16px;
-}
+    .post-head {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-dim);
+      font-size: 11px;
+      margin-bottom: 6px;
+    }
 
-.form-group label {
-  display: block;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text-muted);
-  margin-bottom: 6px;
-}
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 30px 0;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-dim);
+    }
 
-.form-control {
-  width: 100%;
-  padding: 9px 12px;
-  background: var(--bg-subtle);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  color: #fff;
-  font-size: 14px;
-  font-family: inherit;
-  outline: none;
-}
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2.2rem; }
+      .downloads-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
 
-.form-control:focus {
-  border-color: rgba(255, 255, 255, 0.3);
-}
+  <!-- Анонс -->
+  <div class="announcement">
+    <span id="announcementText">🔥 Обновление Whyexx v5 для Minecraft 1.21.4 доступно</span>
+  </div>
 
-textarea.form-control {
-  resize: vertical;
-  min-height: 90px;
-}
+  <!-- Навигация -->
+  <header>
+    <div class="container nav-wrap">
+      <a href="#" class="brand">
+        <span class="brand-dot"></span>
+        Whyexx
+      </a>
 
-/* Посты в модалке темы */
-.post-item {
-  padding: 12px 14px;
-  background: var(--bg-subtle);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  margin-bottom: 10px;
-  font-size: 13px;
-}
+      <nav class="nav-links">
+        <a href="#downloads">Скачать</a>
+        <a href="#forum">Форум</a>
+        <a href="https://github.com/fwajnfuhauhfuhzsfutga/landar-" target="_blank">GitHub</a>
+      </nav>
 
-.post-head {
-  display: flex;
-  justify-content: space-between;
-  color: var(--text-dim);
-  font-size: 11px;
-  margin-bottom: 6px;
-}
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <button id="adminBtn" class="btn btn-outline btn-sm" onclick="openAdminModal()">Админка</button>
+        <button class="btn btn-outline btn-sm" onclick="openAuthModal()">Войти</button>
+      </div>
+    </div>
+  </header>
 
-.post-body {
-  color: var(--text);
-  white-space: pre-wrap;
-}
+  <!-- Главный экран -->
+  <section class="hero container">
+    <div class="badge-ver">
+      Whyexx v5 • Minecraft 1.21.4
+    </div>
 
-footer {
-  border-top: 1px solid var(--border);
-  padding: 30px 0;
-  text-align: center;
-  font-size: 13px;
-  color: var(--text-dim);
-}
+    <h1>Whyexx Client</h1>
+    <p>Легковесный клиент нового поколения для Minecraft 1.21.4.</p>
 
-@media (max-width: 640px) {
-  .hero h1 { font-size: 2.2rem; }
-  .downloads-row { flex-direction: column; }
-  .dl-card { min-width: 100%; }
-}
+    <!-- Загрузки -->
+    <div class="downloads-grid" id="downloads">
+      
+      <!-- Карточка 1: Bootstrapper.exe -->
+      <div class="dl-card">
+        <div>
+          <div class="dl-head">
+            <span class="dl-title">Bootstrapper</span>
+            <span class="dl-tag">EXE LOADER</span>
+          </div>
+          <div class="dl-desc">Автоматический загрузчик и инжектор</div>
+        </div>
+        <a id="btnLoader" href="https://github.com/fwajnfuhauhfuhzsfutga/landar-/releases/download/Zetix/Bootstrapper.exe" target="_blank" class="btn btn-primary">
+          Скачать Bootstrapper.exe
+        </a>
+      </div>
+
+      <!-- Карточка 2: why-5.jar -->
+      <div class="dl-card">
+        <div>
+          <div class="dl-head">
+            <span class="dl-title">Whyexx (JAR)</span>
+            <span class="dl-tag">1.21.4</span>
+          </div>
+          <div class="dl-desc">Мод why-5.jar для папки mods</div>
+        </div>
+        <a id="btnJar" href="https://github.com/fwajnfuhauhfuhzsfutga/landar-/releases/download/Zetix/why-5.jar" target="_blank" class="btn btn-outline">
+          Скачать why-5.jar
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Форум -->
+  <section class="section container" id="forum">
+    <div class="section-head">
+      <h2>Форум</h2>
+      <button class="btn btn-primary btn-sm" onclick="openNewTopicModal()">+ Создать тему</button>
+    </div>
+
+    <div class="forum-box">
+      <div class="forum-tabs" id="categoryTabs">
+        <button class="f-tab active" onclick="switchCategory(null, this)">Все</button>
+        <button class="f-tab" onclick="switchCategory(1, this)">Новости</button>
+        <button class="f-tab" onclick="switchCategory(2, this)">Общение</button>
+        <button class="f-tab" onclick="switchCategory(3, this)">Конфиги</button>
+      </div>
+
+      <div id="topicList"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      Whyexx Client 1.21.4 • <a href="javascript:void(0)" onclick="openAdminModal()" style="color:var(--text-muted); text-decoration:none;">Управление</a>
+    </div>
+  </footer>
+
+  <!-- Модалка: Новая тема -->
+  <div id="newTopicModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Новая тема</h3>
+        <button class="modal-close" onclick="closeModal('newTopicModal')">&times;</button>
+      </div>
+      <form onsubmit="handleCreateTopic(event)">
+        <div class="form-group">
+          <label>Категория</label>
+          <select id="topicCategorySelect" class="form-control">
+            <option value="1">Новости</option>
+            <option value="2">Общение</option>
+            <option value="3">Конфиги</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Заголовок</label>
+          <input type="text" id="newTopicTitle" class="form-control" required placeholder="Заголовок темы">
+        </div>
+        <div class="form-group">
+          <label>Сообщение</label>
+          <textarea id="newTopicContent" class="form-control" required placeholder="Текст сообщения..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Опубликовать</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Модалка: Просмотр темы -->
+  <div id="topicViewModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="viewTopicTitle">Тема</h3>
+        <button class="modal-close" onclick="closeModal('topicViewModal')">&times;</button>
+      </div>
+      <div id="topicViewPosts" style="max-height: 45vh; overflow-y: auto; margin-bottom: 16px;"></div>
+      <form onsubmit="handleSendReply(event)">
+        <div class="form-group">
+          <textarea id="replyContent" class="form-control" placeholder="Написать ответ..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm">Отправить</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Модалка: Админка -->
+  <div id="adminModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Управление</h3>
+        <button class="modal-close" onclick="closeModal('adminModal')">&times;</button>
+      </div>
+      <div class="form-group">
+        <label>Ссылка на Bootstrapper.exe</label>
+        <input type="text" id="admLoader" class="form-control" value="https://github.com/fwajnfuhauhfuhzsfutga/landar-/releases/download/Zetix/Bootstrapper.exe">
+      </div>
+      <div class="form-group">
+        <label>Ссылка на why-5.jar</label>
+        <input type="text" id="admJar" class="form-control" value="https://github.com/fwajnfuhauhfuhzsfutga/landar-/releases/download/Zetix/why-5.jar">
+      </div>
+      <div class="form-group">
+        <label>Текст объявления</label>
+        <input type="text" id="admAnnounce" class="form-control" value="🔥 Обновление Whyexx v5 для Minecraft 1.21.4 доступно">
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="saveAdminSettings()">Сохранить на сайте</button>
+    </div>
+  </div>
+
+  <!-- Модалка: Авторизация -->
+  <div id="authModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 360px;">
+      <div class="modal-header">
+        <h3>Вход</h3>
+        <button class="modal-close" onclick="closeModal('authModal')">&times;</button>
+      </div>
+      <form onsubmit="handleAuth(event)">
+        <div class="form-group">
+          <label>Никнейм</label>
+          <input type="text" id="authNick" class="form-control" placeholder="Ваш ник" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Войти</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'whyexx_topics_v5';
+    let currentUser = localStorage.getItem('whyexx_nick') || null;
+    let activeTopicId = null;
+    let currentCat = null;
+
+    const defaultTopics = [
+      {
+        id: 1,
+        category_id: 1,
+        title: "Релиз Whyexx v5 для Minecraft 1.21.4",
+        author: "admin",
+        is_pinned: true,
+        created_at: "Сегодня",
+        posts: [{ author: "admin", content: "Клиент обновлен до версии 1.21.4! Скачивайте Bootstrapper.exe и why-5.jar.", created_at: "Сегодня" }]
+      },
+      {
+        id: 2,
+        category_id: 3,
+        title: "Конфиг под FunTime и ReallyWorld",
+        author: "Zetix",
+        is_pinned: false,
+        created_at: "Сегодня",
+        posts: [{ author: "Zetix", content: "Плавная киллаура без банов, проверено на 1.21.4.", created_at: "Сегодня" }]
+      }
+    ];
+
+    function getTopics() {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored ? JSON.parse(stored) : defaultTopics;
+    }
+
+    function saveTopics(topics) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(topics));
+    }
+
+    function renderTopics(cat = null) {
+      const list = document.getElementById('topicList');
+      let topics = getTopics();
+      if (cat) topics = topics.filter(t => t.category_id === cat);
+
+      list.innerHTML = '';
+      topics.forEach(t => {
+        const row = document.createElement('div');
+        row.className = 'topic-row';
+        row.onclick = () => openTopic(t.id);
+        row.innerHTML = `
+          <div class="topic-info">
+            <h4>${t.is_pinned ? '<span class="tag-pin">PIN</span>' : ''}${t.title}</h4>
+            <p>${t.author} • ${t.created_at}</p>
+          </div>
+          <div style="font-size:12px; color:var(--text-dim);">💬 ${t.posts.length}</div>
+        `;
+        list.appendChild(row);
+      });
+    }
+
+    function switchCategory(cat, el) {
+      currentCat = cat;
+      document.querySelectorAll('.f-tab').forEach(t => t.classList.remove('active'));
+      if (el) el.classList.add('active');
+      renderTopics(cat);
+    }
+
+    function openTopic(id) {
+      activeTopicId = id;
+      const t = getTopics().find(x => x.id === id);
+      if (!t) return;
+      document.getElementById('viewTopicTitle').innerText = t.title;
+      const box = document.getElementById('topicViewPosts');
+      box.innerHTML = '';
+      t.posts.forEach(p => {
+        box.innerHTML += `
+          <div class="post-item">
+            <div class="post-head"><span><strong>${p.author}</strong></span><span>${p.created_at}</span></div>
+            <div>${p.content}</div>
+          </div>
+        `;
+      });
+      document.getElementById('topicViewModal').classList.add('active');
+    }
+
+    function handleSendReply(e) {
+      e.preventDefault();
+      const text = document.getElementById('replyContent').value.trim();
+      if (!text) return;
+      const topics = getTopics();
+      const t = topics.find(x => x.id === activeTopicId);
+      if (t) {
+        t.posts.push({ author: currentUser || 'Гость', content: text, created_at: 'Только что' });
+        saveTopics(topics);
+        document.getElementById('replyContent').value = '';
+        openTopic(activeTopicId);
+        renderTopics(currentCat);
+      }
+    }
+
+    function handleCreateTopic(e) {
+      e.preventDefault();
+      const cat = parseInt(document.getElementById('topicCategorySelect').value);
+      const title = document.getElementById('newTopicTitle').value.trim();
+      const content = document.getElementById('newTopicContent').value.trim();
+      if (!title || !content) return;
+
+      const topics = getTopics();
+      topics.unshift({
+        id: Date.now(),
+        category_id: cat,
+        title: title,
+        author: currentUser || 'Гость',
+        is_pinned: false,
+        created_at: 'Только что',
+        posts: [{ author: currentUser || 'Гость', content: content, created_at: 'Только что' }]
+      });
+      saveTopics(topics);
+      closeModal('newTopicModal');
+      document.getElementById('newTopicTitle').value = '';
+      document.getElementById('newTopicContent').value = '';
+      renderTopics(currentCat);
+    }
+
+    function saveAdminSettings() {
+      const l = document.getElementById('admLoader').value;
+      const j = document.getElementById('admJar').value;
+      const a = document.getElementById('admAnnounce').value;
+      document.getElementById('btnLoader').href = l;
+      document.getElementById('btnJar').href = j;
+      document.getElementById('announcementText').innerText = a;
+      closeModal('adminModal');
+      alert("Настройки обновлены!");
+    }
+
+    function handleAuth(e) {
+      e.preventDefault();
+      currentUser = document.getElementById('authNick').value.trim();
+      localStorage.setItem('whyexx_nick', currentUser);
+      closeModal('authModal');
+      alert('Вы вошли как ' + currentUser);
+    }
+
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+    function openNewTopicModal() { openModal('newTopicModal'); }
+    function openAdminModal() { openModal('adminModal'); }
+    function openAuthModal() { openModal('authModal'); }
+
+    document.addEventListener('DOMContentLoaded', () => { renderTopics(); });
+  </script>
+</body>
+</html>
