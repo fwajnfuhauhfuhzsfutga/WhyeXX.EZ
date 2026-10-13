@@ -1,0 +1,88 @@
+{
+  "site_title": "Whyexx Client 1.21.4 | Official Portal",
+  "version": "1.21.4",
+  "announcement": "🔥 Обновление Whyexx v5 для Minecraft 1.21.4 доступно! Скачивайте новый Loader и Whyexx Jar.",
+  "maintenance_mode": false,
+  "downloads": {
+    "loader": {
+      "name": "Bootstrapper.exe",
+      "url": "https://github.com/fwajnfuhauhfuhzsfutga/landar-/releases/download/Zetix/Bootstrapper.exe",
+      "type": "EXE Loader",
+      "desc": "Автоматический инжектор и загрузчик Whyexx"
+    },
+    "jar": {
+      "name": "why-5.jar",
+      "url": "https://github.com/fwajnfuhauhfuhzsfutga/landar-/releases/download/Zetix/why-5.jar",
+      "version": "1.21.4",
+      "type": "Client Jar",
+      "desc": "Оригинальный мод для Fabric 1.21.4"
+    }
+  },
+  "community": {
+    "github": "https://github.com/fwajnfuhauhfuhzsfutga/landar-",
+    "discord": "https://discord.gg/",
+    "telegram": "https://t.me/"
+  },
+  "admin_secret_key": "whyexx_admin_2026",
+  "admins": [
+    "admin",
+    "owner",
+    "developer"
+  ],
+  "forum_categories": [
+    { "id": 1, "name": "📢 Новости и обновления", "slug": "news" },
+    { "id": 2, "name": "💬 Общее общение", "slug": "general" },
+    { "id": 3, "name": "⚙️ Конфиги и скрипты", "slug": "configs" },
+    { "id": 4, "name": "🐛 Баг-репорты и помощь", "slug": "support" }
+  ],
+  "forum_topics": [
+    {
+      "id": 1,
+      "category_id": 1,
+      "title": "Официальный релиз Whyexx v5 для Minecraft 1.21.4!",
+      "author": "admin",
+      "author_role": "superadmin",
+      "is_pinned": true,
+      "is_locked": false,
+      "views": 420,
+      "created_at": "2026-10-13 20:00:00",
+      "posts": [
+        {
+          "author": "admin",
+          "author_role": "superadmin",
+          "content": "Приветствуем всех! Чит Whyexx успешно обновлен под версию Minecraft 1.21.4. Скачивайте Bootstrapper.exe или why-5.jar на главной странице!",
+          "created_at": "2026-10-13 20:00:00"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "category_id": 3,
+      "title": "Лучший конфиг под ReallyWorld и FunTime 1.21.4",
+      "author": "Zetix",
+      "author_role": "vip",
+      "is_pinned": false,
+      "is_locked": false,
+      "views": 185,
+      "created_at": "2026-10-13 20:30:00",
+      "posts": [
+        {
+          "author": "Zetix",
+          "author_role": "vip",
+          "content": "Делюсь лучшими настройками Киллауры и Стрейфов без детектов на грифе. Скачивайте в клиенте через вкладку Configs!",
+          "created_at": "2026-10-13 20:30:00"
+        }
+      ]
+    }
+  ],
+  "users": [
+    { "username": "admin", "role": "superadmin", "status": "active" },
+    { "username": "Zetix", "role": "vip", "status": "active" }
+  ],
+  "cloud_db": {
+    "enabled": false,
+    "provider": "supabase",
+    "supabase_url": "",
+    "supabase_anon_key": ""
+  }
+}
