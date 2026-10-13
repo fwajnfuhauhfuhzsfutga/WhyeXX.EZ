@@ -1,359 +1,431 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Whyexx Client 1.21.4 | Официальный портал</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
-  <style>
-    .font-gaming { font-family: 'Orbitron', sans-serif; }
-    .hero-title, .logo { font-family: 'Orbitron', sans-serif; }
-  </style>
-</head>
-<body>
+:root {
+  --bg: #090a0d;
+  --bg-subtle: #101218;
+  --bg-card: #13151f;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.18);
+  --text: #ededed;
+  --text-muted: #888d9e;
+  --text-dim: #505565;
+  --accent: #ffffff;
+  --accent-blue: #3b82f6;
+  --danger: #ef4444;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", Helvetica, Arial, sans-serif;
+}
 
-  <!-- Глобальный баннер анонсов -->
-  <div id="announcementBar" class="announcement-bar">
-    <span class="badge">NEW</span>
-    <span id="announcementText">🔥 Обновление Whyexx v5 для Minecraft 1.21.4 доступно! Скачайте Loader и Jar.</span>
-  </div>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  <!-- Шапка сайта -->
-  <header>
-    <div class="container nav-wrap">
-      <a href="#" class="logo">
-        <div class="logo-icon">W</div>
-        <span>WHYEXX</span>
-      </a>
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
 
-      <nav class="nav-links">
-        <a href="#downloads" class="active">Скачать</a>
-        <a href="#features">Возможности</a>
-        <a href="#forum">Форум</a>
-        <a href="#instructions">Инструкция</a>
-      </nav>
+.container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
 
-      <div class="nav-auth">
-        <!-- Кнопка админки (будет показана админам или по клику с паролем) -->
-        <button id="adminBtn" class="btn btn-admin" style="display:none;" onclick="openAdminModal()">
-          👑 Админка
-        </button>
-        <!-- Кнопка профиля / входа -->
-        <div id="userSection">
-          <button class="btn btn-secondary" onclick="openAuthModal('login')">Войти</button>
-          <button class="btn btn-primary" onclick="openAuthModal('register')">Регистрация</button>
-        </div>
-      </div>
-    </div>
-  </header>
+/* Навигация */
+header {
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: rgba(9, 10, 13, 0.85);
+  backdrop-filter: blur(12px);
+  z-index: 50;
+}
 
-  <!-- Главный экран Hero -->
-  <section class="hero container">
-    <div class="hero-badge">
-      <span>⚡ Minecraft 1.21.4 Supported</span>
-      <span>•</span>
-      <span>🟢 Undetected & Optimized</span>
-    </div>
+.nav-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
 
-    <h1 class="hero-title">
-      ДОМИНИРУЙ С <span>WHYEXX CLIENT</span>
-    </h1>
+.brand {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-    <p class="hero-desc">
-      Новейшее поколение игрового клиента Whyexx 1.21.4. Максимальный FPS, адаптивные обходы античитов, гибкие настройки и авто-обновление через Bootstrapper.
-    </p>
+.brand-dot {
+  width: 7px;
+  height: 7px;
+  background: #22c55e;
+  border-radius: 50%;
+}
 
-    <!-- Карточки скачивания -->
-    <div class="download-grid" id="downloads">
-      
-      <!-- Карточка 1: Bootstrapper Loader -->
-      <div class="download-card">
-        <div>
-          <div class="card-header">
-            <div class="card-icon">🚀</div>
-            <span class="version-tag">EXE LOADER</span>
-          </div>
-          <h3>Whyexx Bootstrapper</h3>
-          <p>Автоматический загрузчик и инжектор. Сам обновляет клиент до актуальной версии и настраивает конфигурацию.</p>
-        </div>
-        <div>
-          <div class="card-meta">
-            <span>Тип: Bootstrapper.exe</span>
-            <span>OS: Windows 10/11</span>
-          </div>
-          <a id="btnDownloadLoader" href="https://github.com/fwajnfuhauhfuhzsfutga/landar-/releases/download/Zetix/Bootstrapper.exe" target="_blank" class="btn btn-primary" style="width: 100%;">
-            ⬇️ Скачать Loader.exe
-          </a>
-        </div>
-      </div>
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
 
-      <!-- Карточка 2: Whyexx .jar -->
-      <div class="download-card card-purple">
-        <div>
-          <div class="card-header">
-            <div class="card-icon">💎</div>
-            <span class="version-tag" id="jarVersionBadge">1.21.4 (v5)</span>
-          </div>
-          <h3>Whyexx Client (JAR)</h3>
-          <p>Оригинальный jar-файл модификации <strong>why-5.jar</strong> для ручной установки в папку mods Fabric / Forge.</p>
-        </div>
-        <div>
-          <div class="card-meta">
-            <span>Файл: why-5.jar</span>
-            <span>Версия: 1.21.4</span>
-          </div>
-          <a id="btnDownloadJar" href="https://github.com/fwajnfuhauhfuhzsfutga/landar-/releases/download/Zetix/why-5.jar" target="_blank" class="btn btn-purple" style="width: 100%;">
-            ⬇️ Скачать why-5.jar (1.21.4)
-          </a>
-        </div>
-      </div>
+.nav-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.15s;
+}
 
-    </div>
-  </section>
+.nav-links a:hover, .nav-links a.active {
+  color: #fff;
+}
 
-  <!-- Блок возможностей -->
-  <section class="features-section container" id="features">
-    <div class="section-header">
-      <h2>Преимущества Whyexx</h2>
-      <p>Спроектирован для бескомпромиссной производительности и побед</p>
-    </div>
+/* Кнопки */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
 
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="icon">⚔️</div>
-        <h4>Умный Combat Assistant</h4>
-        <p>Aura, TriggerBot, AutoTotem и Clicker с тонкой рандомизацией таймингов под современные античиты.</p>
-      </div>
+.btn-primary {
+  background: #fff;
+  color: #000;
+}
+.btn-primary:hover {
+  background: #e2e2e2;
+}
 
-      <div class="feature-card">
-        <div class="icon">👁️</div>
-        <h4>Cyber Render & ESP</h4>
-        <p>Красивые Glow-эффекты, Nametags, Tracers, Trajectories и кастомизируемый HUD под ваш вкус.</p>
-      </div>
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+.btn-outline:hover {
+  border-color: var(--border-hover);
+  background: rgba(255, 255, 255, 0.03);
+}
 
-      <div class="feature-card">
-        <div class="icon">🚀</div>
-        <h4>Экстремальный FPS Boost</h4>
-        <p>Интегрированный оптимизатор рендеринга чанков и частиц. Прирост до 2-3x по сравнению с ванильным клиентом.</p>
-      </div>
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+}
 
-      <div class="feature-card">
-        <div class="icon">🛡️</div>
-        <h4>Защита от проверок</h4>
-        <p>Режим Self-Destruct, очистка следов в памяти и скрытый запуск без детектов в логах процесса.</p>
-      </div>
-    </div>
-  </section>
+/* Баннер анонса */
+.announcement {
+  padding: 8px 16px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-subtle);
+}
 
-  <!-- Блок форума -->
-  <section class="forum-section container" id="forum">
-    <div class="section-header">
-      <h2>Сообщество и Форум</h2>
-      <p>Делитесь конфигами, задавайте вопросы разработчикам и читайте свежие новости</p>
-    </div>
+/* Hero */
+.hero {
+  padding: 70px 0 50px;
+  text-align: center;
+}
 
-    <div class="forum-container">
-      <div class="forum-toolbar">
-        <div class="category-tabs" id="categoryTabs">
-          <button class="cat-btn active" onclick="loadTopics(null)">Все темы</button>
-          <!-- Категории подгружаются динамически -->
-        </div>
-        <button class="btn btn-primary" onclick="openNewTopicModal()">
-          ✏️ Создать тему
-        </button>
-      </div>
+.badge-version {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
 
-      <!-- Список тем -->
-      <div class="topic-list" id="topicList">
-        <div style="text-align:center; padding: 40px; color: var(--text-muted);">
-          Загрузка тем с сервера...
-        </div>
-      </div>
-    </div>
-  </section>
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -1.2px;
+  margin-bottom: 14px;
+}
 
-  <!-- Инструкция -->
-  <section class="container" id="instructions" style="padding-bottom: 60px;">
-    <div class="download-card" style="border-color: rgba(0, 240, 255, 0.2);">
-      <h3 style="margin-bottom: 15px;">📖 Инструкция по запуску Whyexx 1.21.4</h3>
-      <ol style="margin-left: 20px; color: var(--text-muted); line-height: 1.8;">
-        <li>Скачайте <strong>Bootstrapper.exe</strong> для автоматической установки или <strong>why-5.jar</strong> для ручной.</li>
-        <li>При ручной установке поместите файл <code>why-5.jar</code> в вашу папку <code>.minecraft/mods</code> (требуется Fabric 1.21.4).</li>
-        <li>Запустите игру и нажмите правую клавишу <strong>RSHIFT</strong> для открытия графического интерфейса (ClickGUI).</li>
-        <li>Управление сервером, базой данных и правами пользователей осуществляется через скрипт <code>console.py</code>.</li>
-      </ol>
-    </div>
-  </section>
+.hero p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  max-width: 540px;
+  margin: 0 auto 36px;
+}
 
-  <!-- Футер -->
-  <footer>
-    <div class="container">
-      <p>© 2026 Whyexx Client. Разработано для Minecraft 1.21.4. Все права защищены.</p>
-      <p style="margin-top: 8px;">
-        <a href="https://github.com/fwajnfuhauhfuhzsfutga/landar-" target="_blank">GitHub Repository</a> • 
-        <a href="javascript:void(0)" onclick="openAdminModal()">Панель управления</a>
-      </p>
-    </div>
-  </footer>
+/* Кнопки загрузок (Минималистичные) */
+.downloads-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
-  <!-- ================= МОДАЛЬНЫЕ ОКНА ================= -->
+.dl-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  text-align: left;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color 0.15s;
+}
 
-  <!-- Модальное окно: Авторизация / Регистрация -->
-  <div id="authModal" class="modal-overlay">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 id="authModalTitle">Вход в аккаунт</h3>
-        <button class="modal-close" onclick="closeModal('authModal')">&times;</button>
-      </div>
-      <form id="authForm" onsubmit="handleAuthSubmit(event)">
-        <div class="form-group">
-          <label>Логин:</label>
-          <input type="text" id="authUsername" class="form-control" placeholder="Введите логин" required minlength="3">
-        </div>
-        <div class="form-group">
-          <label>Пароль:</label>
-          <input type="password" id="authPassword" class="form-control" placeholder="Введите пароль" required minlength="4">
-        </div>
-        <div id="authError" style="color: var(--danger); font-size: 0.9rem; margin-bottom: 12px; display: none;"></div>
-        <button type="submit" id="authSubmitBtn" class="btn btn-primary" style="width: 100%;">Войти</button>
-      </form>
-    </div>
-  </div>
+.dl-card:hover {
+  border-color: var(--border-hover);
+}
 
-  <!-- Модальное окно: Создание темы -->
-  <div id="newTopicModal" class="modal-overlay">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>Создать новую тему</h3>
-        <button class="modal-close" onclick="closeModal('newTopicModal')">&times;</button>
-      </div>
-      <form id="newTopicForm" onsubmit="handleCreateTopic(event)">
-        <div class="form-group">
-          <label>Категория:</label>
-          <select id="topicCategorySelect" class="form-control" required>
-            <!-- Опции заполняются JS -->
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Заголовок темы:</label>
-          <input type="text" id="newTopicTitle" class="form-control" placeholder="Краткое и понятное название" required minlength="5">
-        </div>
-        <div class="form-group">
-          <label>Сообщение / Описание:</label>
-          <textarea id="newTopicContent" class="form-control" placeholder="Подробно опишите вашу мысль, вопрос или конфиг..." required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%;">Опубликовать тему</button>
-      </form>
-    </div>
-  </div>
+.dl-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
 
-  <!-- Модальное окно: Просмотр темы и ответы -->
-  <div id="topicViewModal" class="modal-overlay">
-    <div class="modal-content" style="max-width: 800px;">
-      <div class="modal-header">
-        <h3 id="viewTopicTitle">Просмотр темы</h3>
-        <button class="modal-close" onclick="closeModal('topicViewModal')">&times;</button>
-      </div>
-      
-      <div id="topicViewPosts" style="max-height: 50vh; overflow-y: auto; margin-bottom: 20px;">
-        <!-- Сообщения темы подгружаются сюда -->
-      </div>
+.dl-card-title {
+  font-size: 16px;
+  font-weight: 600;
+}
 
-      <!-- Форма быстрого ответа -->
-      <form id="replyForm" onsubmit="handleSendReply(event)">
-        <div class="form-group">
-          <textarea id="replyContent" class="form-control" placeholder="Напишите ваш ответ..." required style="min-height: 80px;"></textarea>
-        </div>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <div id="adminTopicControls" style="display: none; gap: 8px;">
-            <!-- Кнопки модерации для админа -->
-          </div>
-          <button type="submit" class="btn btn-primary">Отправить ответ</button>
-        </div>
-      </form>
-    </div>
-  </div>
+.dl-card-tag {
+  font-size: 11px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
 
-  <!-- Модальное окно: Веб Админ-панель -->
-  <div id="adminModal" class="modal-overlay">
-    <div class="modal-content" style="max-width: 900px;">
-      <div class="modal-header">
-        <h3>👑 Панель управления Whyexx (Админка)</h3>
-        <button class="modal-close" onclick="closeModal('adminModal')">&times;</button>
-      </div>
-      
-      <!-- Статистика -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 20px;">
-        <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; text-align: center;">
-          <div style="font-size: 0.8rem; color: var(--text-muted);">Пользователей</div>
-          <div id="admStatUsers" style="font-size: 1.4rem; font-weight: bold; color: var(--accent-cyan);">0</div>
-        </div>
-        <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; text-align: center;">
-          <div style="font-size: 0.8rem; color: var(--text-muted);">Скачиваний Loader</div>
-          <div id="admStatLoader" style="font-size: 1.4rem; font-weight: bold; color: var(--success);">0</div>
-        </div>
-        <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; text-align: center;">
-          <div style="font-size: 0.8rem; color: var(--text-muted);">Скачиваний Jar</div>
-          <div id="admStatJar" style="font-size: 1.4rem; font-weight: bold; color: #ba55d3;">0</div>
-        </div>
-        <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; text-align: center;">
-          <div style="font-size: 0.8rem; color: var(--text-muted);">Тем на форуме</div>
-          <div id="admStatTopics" style="font-size: 1.4rem; font-weight: bold; color: var(--warning);">0</div>
-        </div>
-      </div>
+.dl-card-desc {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-bottom: 18px;
+}
 
-      <!-- Вкладки настроек -->
-      <div style="margin-bottom: 16px;">
-        <h4 style="margin-bottom: 10px; color: var(--accent-cyan);">⚡ Быстрые настройки ссылок</h4>
-        <div class="form-group">
-          <label>Ссылка на Loader.exe:</label>
-          <input type="text" id="admSettingLoader" class="form-control">
-        </div>
-        <div class="form-group">
-          <label>Ссылка на Whyexx .jar:</label>
-          <input type="text" id="admSettingJar" class="form-control">
-        </div>
-        <div class="form-group">
-          <label>Текст объявления на главной:</label>
-          <input type="text" id="admSettingAnnounce" class="form-control">
-        </div>
-        <button class="btn btn-primary" onclick="saveAdminSettings()">Сохранить настройки</button>
-      </div>
+/* Форум */
+.section {
+  padding: 50px 0;
+  border-top: 1px solid var(--border);
+}
 
-      <!-- Список пользователей -->
-      <div style="margin-top: 24px;">
-        <h4 style="margin-bottom: 10px; color: var(--accent-cyan);">👥 Управление пользователями в БД</h4>
-        <div style="overflow-x: auto;">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Логин</th>
-                <th>Роль</th>
-                <th>Статус</th>
-                <th>Действия</th>
-              </tr>
-            </thead>
-            <tbody id="adminUsersTableBody">
-              <!-- Заполняется JS -->
-            </tbody>
-          </table>
-        </div>
-      </div>
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
 
-      <div style="margin-top: 24px; padding: 14px; background: rgba(0, 240, 255, 0.05); border: 1px dashed rgba(0, 240, 255, 0.3); border-radius: 8px;">
-        <strong>💡 Нужен полный доступ ко всем настройкам?</strong>
-        <p style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;">
-          Запустите в терминале: <code>python console.py</code>. Консоль позволяет сбрасывать пароли, менять HWID, генерировать ключи, делать бэкапы БД и выполнять прямые SQL-запросы!
-        </p>
-      </div>
+.section-head h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+}
 
-    </div>
-  </div>
+.forum-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
 
-  <script src="app.js"></script>
-</body>
-</html>
+.forum-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-subtle);
+  overflow-x: auto;
+}
+
+.f-tab {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.f-tab.active, .f-tab:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.topic-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.topic-row:last-child {
+  border-bottom: none;
+}
+
+.topic-row:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.topic-info h4 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.topic-info p {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.tag-pin {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Модалки */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-content {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 580px;
+  padding: 24px;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 9px 12px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+}
+
+.form-control:focus {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/* Посты в модалке темы */
+.post-item {
+  padding: 12px 14px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.post-head {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-dim);
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+
+.post-body {
+  color: var(--text);
+  white-space: pre-wrap;
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 30px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+@media (max-width: 640px) {
+  .hero h1 { font-size: 2.2rem; }
+  .downloads-row { flex-direction: column; }
+  .dl-card { min-width: 100%; }
+}
