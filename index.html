@@ -511,11 +511,53 @@
     </div>
   </div>
 
-  <!-- Модалка: Админка -->
+  <!-- Модалка: Вход / Регистрация с паролем -->
+  <div id="authModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 380px;">
+      <div class="modal-header">
+        <h3 id="authModalTitle">Вход в аккаунт</h3>
+        <button class="modal-close" onclick="closeModal('authModal')">&times;</button>
+      </div>
+      <form onsubmit="handleAuthSubmit(event)">
+        <div class="form-group">
+          <label>Никнейм</label>
+          <input type="text" id="authNick" class="form-control" placeholder="Ваш ник" required minlength="3">
+        </div>
+        <div class="form-group">
+          <label>Пароль</label>
+          <input type="password" id="authPassword" class="form-control" placeholder="••••••••" required minlength="4">
+        </div>
+        <div id="authErrorMsg" style="color:#ef4444; font-size:12px; margin-bottom:10px; display:none;"></div>
+        <button type="submit" id="authBtnSubmit" class="btn btn-primary" style="width:100%; margin-bottom:8px;">Войти</button>
+        <button type="button" class="btn btn-outline btn-sm" style="width:100%;" onclick="toggleAuthMode()">Создать новый аккаунт</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Модалка: Ввод пароля администратора -->
+  <div id="adminPassModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 380px;">
+      <div class="modal-header">
+        <h3>🔒 Доступ к админке</h3>
+        <button class="modal-close" onclick="closeModal('adminPassModal')">&times;</button>
+      </div>
+      <form onsubmit="verifyAdminPass(event)">
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:14px;">Для доступа к управлению введите секретный пароль администратора.</p>
+        <div class="form-group">
+          <label>Пароль администратора</label>
+          <input type="password" id="adminSecretInput" class="form-control" placeholder="••••••••" required>
+        </div>
+        <div id="adminPassError" style="color:#ef4444; font-size:12px; margin-bottom:10px; display:none;">⛔ Неверный пароль администратора!</div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Подтвердить</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Модалка: Админка (защищенная) -->
   <div id="adminModal" class="modal-overlay">
     <div class="modal-content">
       <div class="modal-header">
-        <h3>Управление</h3>
+        <h3>👑 Панель управления (Админ)</h3>
         <button class="modal-close" onclick="closeModal('adminModal')">&times;</button>
       </div>
       <div class="form-group">
@@ -530,30 +572,30 @@
         <label>Текст объявления</label>
         <input type="text" id="admAnnounce" class="form-control" value="🔥 Обновление Whyexx v5 для Minecraft 1.21.4 доступно">
       </div>
-      <button class="btn btn-primary btn-sm" onclick="saveAdminSettings()">Сохранить на сайте</button>
-    </div>
-  </div>
-
-  <!-- Модалка: Авторизация -->
-  <div id="authModal" class="modal-overlay">
-    <div class="modal-content" style="max-width: 360px;">
-      <div class="modal-header">
-        <h3>Вход</h3>
-        <button class="modal-close" onclick="closeModal('authModal')">&times;</button>
+      <div class="form-group">
+        <label>Сменить пароль админки</label>
+        <input type="password" id="admNewPass" class="form-control" placeholder="Новый пароль админки">
       </div>
-      <form onsubmit="handleAuth(event)">
-        <div class="form-group">
-          <label>Никнейм</label>
-          <input type="text" id="authNick" class="form-control" placeholder="Ваш ник" required>
-        </div>
-        <button type="submit" class="btn btn-primary" style="width:100%;">Войти</button>
-      </form>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;">
+        <button class="btn btn-primary btn-sm" onclick="saveAdminSettings()">Сохранить настройки</button>
+        <button class="btn btn-outline btn-sm" onclick="logoutAdmin()">Выйти из админки</button>
+      </div>
     </div>
   </div>
 
   <script>
     const STORAGE_KEY = 'whyexx_topics_v5';
+    const USERS_KEY = 'whyexx_users_db';
+    const ADMIN_PASS_KEY = 'whyexx_admin_password';
+    
+    // Дефолтный пароль админа: whyexx2026
+    if (!localStorage.getItem(ADMIN_PASS_KEY)) {
+      localStorage.setItem(ADMIN_PASS_KEY, 'whyexx2026');
+    }
+
     let currentUser = localStorage.getItem('whyexx_nick') || null;
+    let isAdminAuthenticated = sessionStorage.getItem('whyexx_is_admin') === 'true';
+    let authMode = 'login'; // 'login' или 'register'
     let activeTopicId = null;
     let currentCat = null;
 
@@ -585,6 +627,15 @@
 
     function saveTopics(topics) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(topics));
+    }
+
+    function getUsers() {
+      const stored = localStorage.getItem(USERS_KEY);
+      return stored ? JSON.parse(stored) : [{ nick: "admin", pass: "admin123" }];
+    }
+
+    function saveUsers(users) {
+      localStorage.setItem(USERS_KEY, JSON.stringify(users));
     }
 
     function renderTopics(cat = null) {
@@ -635,12 +686,17 @@
 
     function handleSendReply(e) {
       e.preventDefault();
+      if (!currentUser) {
+        alert("Для отправки ответа необходимо войти в аккаунт!");
+        openAuthModal();
+        return;
+      }
       const text = document.getElementById('replyContent').value.trim();
       if (!text) return;
       const topics = getTopics();
       const t = topics.find(x => x.id === activeTopicId);
       if (t) {
-        t.posts.push({ author: currentUser || 'Гость', content: text, created_at: 'Только что' });
+        t.posts.push({ author: currentUser, content: text, created_at: 'Только что' });
         saveTopics(topics);
         document.getElementById('replyContent').value = '';
         openTopic(activeTopicId);
@@ -650,6 +706,11 @@
 
     function handleCreateTopic(e) {
       e.preventDefault();
+      if (!currentUser) {
+        alert("Для создания темы необходимо авторизоваться!");
+        openAuthModal();
+        return;
+      }
       const cat = parseInt(document.getElementById('topicCategorySelect').value);
       const title = document.getElementById('newTopicTitle').value.trim();
       const content = document.getElementById('newTopicContent').value.trim();
@@ -660,10 +721,10 @@
         id: Date.now(),
         category_id: cat,
         title: title,
-        author: currentUser || 'Гость',
+        author: currentUser,
         is_pinned: false,
         created_at: 'Только что',
-        posts: [{ author: currentUser || 'Гость', content: content, created_at: 'Только что' }]
+        posts: [{ author: currentUser, content: content, created_at: 'Только что' }]
       });
       saveTopics(topics);
       closeModal('newTopicModal');
@@ -672,32 +733,136 @@
       renderTopics(currentCat);
     }
 
+    // ================= АВТОРИЗАЦИЯ С ПАРОЛЕМ =================
+
+    function openAuthModal() {
+      authMode = 'login';
+      document.getElementById('authModalTitle').innerText = 'Вход в аккаунт';
+      document.getElementById('authBtnSubmit').innerText = 'Войти';
+      document.getElementById('authErrorMsg').style.display = 'none';
+      openModal('authModal');
+    }
+
+    function toggleAuthMode() {
+      authMode = (authMode === 'login') ? 'register' : 'login';
+      document.getElementById('authModalTitle').innerText = (authMode === 'login') ? 'Вход в аккаунт' : 'Регистрация аккаунта';
+      document.getElementById('authBtnSubmit').innerText = (authMode === 'login') ? 'Войти' : 'Зарегистрироваться';
+      document.getElementById('authErrorMsg').style.display = 'none';
+    }
+
+    function handleAuthSubmit(e) {
+      e.preventDefault();
+      const nick = document.getElementById('authNick').value.trim();
+      const pass = document.getElementById('authPassword').value.trim();
+      const errBox = document.getElementById('authErrorMsg');
+      const users = getUsers();
+
+      if (authMode === 'login') {
+        const found = users.find(u => u.nick.toLowerCase() === nick.toLowerCase());
+        if (!found || found.pass !== pass) {
+          errBox.innerText = 'Неверный никнейм или пароль!';
+          errBox.style.display = 'block';
+          return;
+        }
+        currentUser = found.nick;
+      } else {
+        // Регистрация
+        const exists = users.find(u => u.nick.toLowerCase() === nick.toLowerCase());
+        if (exists) {
+          errBox.innerText = 'Пользователь с таким ником уже существует!';
+          errBox.style.display = 'block';
+          return;
+        }
+        users.push({ nick, pass });
+        saveUsers(users);
+        currentUser = nick;
+      }
+
+      localStorage.setItem('whyexx_nick', currentUser);
+      closeModal('authModal');
+      updateUserButton();
+      alert(`Добро пожаловать, ${currentUser}!`);
+    }
+
+    function updateUserButton() {
+      const btn = document.querySelector('header .btn-outline[onclick="openAuthModal()"]');
+      if (btn) {
+        if (currentUser) {
+          btn.innerText = `👤 ${currentUser}`;
+          btn.onclick = () => {
+            if (confirm(`Выйти из аккаунта ${currentUser}?`)) {
+              currentUser = null;
+              localStorage.removeItem('whyexx_nick');
+              location.reload();
+            }
+          };
+        } else {
+          btn.innerText = 'Войти';
+          btn.onclick = openAuthModal;
+        }
+      }
+    }
+
+    // ================= ПРОВЕРКА ПАРОЛЯ АДМИНИСТРАТОРА =================
+
+    function openAdminModal() {
+      if (isAdminAuthenticated) {
+        openModal('adminModal');
+      } else {
+        document.getElementById('adminPassError').style.display = 'none';
+        document.getElementById('adminSecretInput').value = '';
+        openModal('adminPassModal');
+      }
+    }
+
+    function verifyAdminPass(e) {
+      e.preventDefault();
+      const enteredPass = document.getElementById('adminSecretInput').value.trim();
+      const actualPass = localStorage.getItem(ADMIN_PASS_KEY) || 'whyexx2026';
+
+      if (enteredPass === actualPass) {
+        isAdminAuthenticated = true;
+        sessionStorage.setItem('whyexx_is_admin', 'true');
+        closeModal('adminPassModal');
+        openModal('adminModal');
+      } else {
+        document.getElementById('adminPassError').style.display = 'block';
+      }
+    }
+
+    function logoutAdmin() {
+      isAdminAuthenticated = false;
+      sessionStorage.removeItem('whyexx_is_admin');
+      closeModal('adminModal');
+      alert("Вы вышли из режима администратора.");
+    }
+
     function saveAdminSettings() {
       const l = document.getElementById('admLoader').value;
       const j = document.getElementById('admJar').value;
       const a = document.getElementById('admAnnounce').value;
+      const newP = document.getElementById('admNewPass').value.trim();
+
+      if (newP) {
+        localStorage.setItem(ADMIN_PASS_KEY, newP);
+        alert(`Пароль администратора изменен на: ${newP}`);
+      }
+
       document.getElementById('btnLoader').href = l;
       document.getElementById('btnJar').href = j;
       document.getElementById('announcementText').innerText = a;
       closeModal('adminModal');
-      alert("Настройки обновлены!");
-    }
-
-    function handleAuth(e) {
-      e.preventDefault();
-      currentUser = document.getElementById('authNick').value.trim();
-      localStorage.setItem('whyexx_nick', currentUser);
-      closeModal('authModal');
-      alert('Вы вошли как ' + currentUser);
+      alert("Настройки сайта обновлены!");
     }
 
     function openModal(id) { document.getElementById(id).classList.add('active'); }
     function closeModal(id) { document.getElementById(id).classList.remove('active'); }
     function openNewTopicModal() { openModal('newTopicModal'); }
-    function openAdminModal() { openModal('adminModal'); }
-    function openAuthModal() { openModal('authModal'); }
 
-    document.addEventListener('DOMContentLoaded', () => { renderTopics(); });
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTopics();
+      updateUserButton();
+    });
   </script>
 </body>
 </html>
