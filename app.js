@@ -271,28 +271,20 @@ function renderTopics(categoryId = null) {
   list.innerHTML = '';
   topics.forEach(t => {
     const item = document.createElement('div');
-    item.className = 'topic-item';
+    item.className = 'topic-row';
     item.onclick = () => openTopicDetails(t.id);
 
-    const isPinnedBadge = t.is_pinned ? `<span style="color: var(--warning); margin-right: 6px;">📌 [ЗАКРЕПЛЕНО]</span>` : '';
-    const isLockedBadge = t.is_locked ? `<span style="color: var(--danger); margin-right: 6px;">🔒 [ЗАКРЫТО]</span>` : '';
+    const isPinnedBadge = t.is_pinned ? `<span class="tag-pin">PIN</span> ` : '';
+    const isLockedBadge = t.is_locked ? `<span class="tag-pin" style="background:#ef4444;">LOCK</span> ` : '';
     const postsCount = t.posts ? t.posts.length : 1;
 
     item.innerHTML = `
-      <div class="topic-main">
-        <div class="topic-icon">${t.is_pinned ? '⭐' : '💬'}</div>
-        <div>
-          <div class="topic-title">${isPinnedBadge}${isLockedBadge}${escapeHtml(t.title)}</div>
-          <div class="topic-meta">
-            <span>Автор: <strong>${escapeHtml(t.author || 'Пользователь')}</strong></span>
-            ${getRoleBadge(t.author_role || 'user')}
-            <span>• ${escapeHtml(t.created_at || 'Сегодня')}</span>
-          </div>
-        </div>
+      <div class="topic-info">
+        <h4>${isPinnedBadge}${isLockedBadge}${escapeHtml(t.title)}</h4>
+        <p>${escapeHtml(t.author || 'Пользователь')} • ${escapeHtml(t.created_at || 'Недавно')}</p>
       </div>
-      <div class="topic-stats">
-        <span>💬 ${postsCount}</span>
-        <span>👁️ ${t.views || 100}</span>
+      <div style="font-size:12px; color:var(--text-dim);">
+        💬 ${postsCount}
       </div>
     `;
     list.appendChild(item);
@@ -333,16 +325,13 @@ function openTopicDetails(topicId) {
   const posts = topic.posts || [];
   posts.forEach(p => {
     const pDiv = document.createElement('div');
-    pDiv.className = 'topic-view-post';
+    pDiv.className = 'post-item';
     pDiv.innerHTML = `
-      <div class="post-header">
-        <div>
-          <strong>${escapeHtml(p.author)}</strong> 
-          ${getRoleBadge(p.author_role || 'user')}
-        </div>
-        <span style="color: var(--text-dim);">${escapeHtml(p.created_at || '')}</span>
+      <div class="post-head">
+        <span><strong>${escapeHtml(p.author)}</strong> ${getRoleBadge(p.author_role || 'user')}</span>
+        <span>${escapeHtml(p.created_at || '')}</span>
       </div>
-      <div class="post-content">${escapeHtml(p.content)}</div>
+      <div class="post-body">${escapeHtml(p.content)}</div>
     `;
     postsBox.appendChild(pDiv);
   });
